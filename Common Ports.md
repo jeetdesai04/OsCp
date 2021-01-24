@@ -6,8 +6,11 @@
 
 ```
 sudo nmap -sC -sV -oA nmap/intial <IP>
+```
+```
 sudo nmap -sS -sC -sV -oA nmap/initial <IP>
-
+```
+```
 sudo nmap -p- -oA nmap/all <IP>
 ```
 
@@ -15,13 +18,16 @@ sudo nmap -p- -oA nmap/all <IP>
 
 ```
 sudo nmap -sU -sC -sV -oA nmap/intialUdp <IP>
+```
+```
 sudo nmap -sU -sS -sC -sV -oA nmap/initialUdp <IP>
 ```
 ## Auto Enumeration Tool(s) (General)
 
 ```
 nmapAutomator <IP> All
-
+```
+```
 autorecon <IP>/CIDR
 ```
 
@@ -29,7 +35,8 @@ autorecon <IP>/CIDR
 
 ```
 nc -nv <IP> <PORT>
-
+```
+```
 telnet <IP> <PORT>
 ```
 
@@ -63,7 +70,117 @@ ftp> binary (if necessary)
 ftp> put <FILE>
 ```
 
-## SSH 
+## SSH - Port 22
+
+### Connect
+
+```
+ssh <USER>@<IP> <PORT - (DEFAULT - 22)>
+```
+```
+ssh -i key.txt <USER>@<IP> <PORT - (DEFAULT -22)>
+```
+
+### Brute Force
+
+```
+hydra -V -f -L <USERS_LIST> -P <PASSWORDS_LIST> ssh://<IP> -u -vV
+```
+
+## DNS - Port 53
+
+### Basic Enum
+
+```
+dnsenum <DOMAIN>
+```
+```
+dnsrecon -d <DOMAIN>
+```
+
+### Zone Transfer
+
+```
+dnsrecon -d <DOMAIN> -a
+dig axfr <DOMAIN> @ns1.test.com
+```
+
+### Brute Force
+
+```
+https://github.com/blark/aiodnsbrute
+```
+
+## HTTP/HTTPS - Port 80/443
+
+### Auto Scan
+
+```
+nikto -h <URL>
+```
+
+### Brute Force Directories
+
+```
+gobuster dir -u <URL> -w <PATH-TO-WORDLIST> -x <FILE-EXTENSIONS>
+```
+
+### WordPress
+
+```
+wpscan --url <URL>
+```
+
+### Drupal
+
+```
+droopescan scan -u <URL>
+```
+
+### Joomla
+
+```
+joomscan -u <URL>
+```
+
+### WebDav
+
+```
+davtest -url <URL>
+```
+
+### Command Injection 
+
+```
+https://github.com/swisskyrepo/PayloadsAllTheThings/tree/master/Command%20Injection
+```
+
+### File Upload
+
+```
+https://github.com/swisskyrepo/PayloadsAllTheThings/tree/master/Upload%20Insecure%20Files
+```
+
+### SQL Injection
+
+```
+https://github.com/swisskyrepo/PayloadsAllTheThings/tree/master/SQL%20Injection
+```
+
+#### General SQL Cheatsheets
+
+```
+https://www.exploit-db.com/papers/12975
+
+https://bhanusnotes.blogspot.com/2019/09/sql-injection-cheat-sheet.html
+```
+
+#### Error - Based SQL Cheatsheet
+
+```
+https://perspectiverisk.com/mssql-practical-injection-cheat-sheet/
+```
+
 ### SMB
 
 ```
