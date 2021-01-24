@@ -1,14 +1,33 @@
-# Methodology/Checklist
+# Common Ports Enum (Frequently seen)
 
-- shell spawning
+## FTP - Port 21
+
+### Connect
 
 ```
-https://netsec.ws/?p=337
-python -c 'import pty; pty.spawn("/bin/bash")'
+ftp <IP> <PORT - (DEFAULT 21)>
+```
 
-CTRL+Z
-stty raw -echo
-fg
+### Brute Force
+
+```
+hydra -V -f -L <USERS_LIST> -P <PASSWORDS_LIST> ftp://<IP> -u -vV
+```
+
+### Download File
+
+```
+ftp> passive (if necessary)
+ftp> binary (if necessary)
+ftp> get <FILE>
+```
+
+### Upload File
+
+```
+ftp> passive (if necessary)
+ftp> binary (if necessary)
+ftp> put <FILE>
 ```
 
 ### SMB
