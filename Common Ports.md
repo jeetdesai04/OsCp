@@ -1,5 +1,22 @@
-# Common Ports Enum (Frequently seen)
+# Common Ports (Frequently seen)
 
+## Manual Port Scan
+
+### TCP
+
+```
+sudo nmap -sC -sV -oA nmap/intial <IP>
+sudo nmap -sS -sC -sV -oA nmap/initial <IP>
+
+sudo nmap -p- -oA nmap/all <IP>
+```
+
+### UDP
+
+```
+sudo nmap -sU -sC -sV -oA nmap/intialUdp <IP>
+sudo nmap -sU -sS -sC -sV -oA nmap/initialUdp <IP>
+```
 ## Auto Enumeration Tool(s) (General)
 
 ```
@@ -46,6 +63,7 @@ ftp> binary (if necessary)
 ftp> put <FILE>
 ```
 
+## SSH 
 ### SMB
 
 ```
