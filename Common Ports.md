@@ -181,27 +181,82 @@ https://bhanusnotes.blogspot.com/2019/09/sql-injection-cheat-sheet.html
 https://perspectiverisk.com/mssql-practical-injection-cheat-sheet/
 ```
 
-### SMB
+## POP3 - Port 110
+
+### Brute Force
 
 ```
-$ nmap -v -p 139,445 -oG smb.txt 10.11.1.5    # initial scan for smb, output greppable format
+hydra -l <USER> -P <PASSWORDS_LIST> -f <IP> pop3 -V
+hydra -S -v -l <USER> -P <PASSWORDS_LIST> -s 995 -f <IP> pop3 -V
+```
 
-$ sudo nbtscan -r <ip>  # specialized tool for NetBIOS Information
+### Read Mail
 
-$ nmap --script smb-vuln* -p 139,445 <ip>   # check for vulns
+```
+telnet <IP> <PORT>  # Port should be 110 as default
 
-$ enum4linux -a <ip>    # overall scan
+USER <USER>
+PASS <PASSWORD>
+LIST
+RETR <MAIL#>
+QUIT
+```
 
-$ smbmap -H <ip/hostname>   # command will show shares on host
+## SNMP - Port 161
 
-$ smbmap -H <ip> -d <domain> -u <user> -p <password>
+### Brute Force Community Strings
 
-$ smbclient -L \\<ip>
+```
+onesixtyone -c /home/kali/wordlist/SecLists/Discovery/SNMP/common-snmp-community-strings-onesixtyone.txt <IP>
+```
+```
+snmpbulkwalk -c <COMMUNITY_STRING> -v<VERSION> <IP>
+```
+```
+snmp-check <IP>
+```
+```
+http://net-snmp.sourceforge.net/tutorial/tutorial-5/commands/snmpset.html
+```
 
-$ echo exit | smbclient -L \\\\<ip>   # exit will take care of any password popups
+## SMB - Port 445
 
-$ smbclient \\\\<ip>\\<share name>    # attempt to connect to the share
+### Scan for Vulnerabilities
 
+```
+nmap -p139,445 --script "smb-vuln-* and not(smb-vuln-regsvc-dos)" --script-args smb-vuln-cve-2017-7494.check-version,unsafe=1 <IP>
+```
+```
+nmap --script smb-vuln* -p 139,445 <IP>
+```
+### Auto Scans
+
+```
+sudo nbtscan -r <IP>
+```
+```
+enum4linux -a <IP>
+```
+
+### Manual Enumeration
+
+```
+smbmap -H <IP>
+smbmap -u '' -p '' -H <IP>
+smbmap -u 'guest' -p '' -H <IP>
+smbmap -u '' -p '' -H <IP> -R
+smbmap -H <IP> -d <DOMAIN> -u <USER> -p <PASSWORD>
+
+crackmapexec smb <IP>
+crackmapexec smb <IP> -u '' -p ''
+crackmapexec smb <IP> -u 'guest' -p ''
+crackmapexec smb <IP> -u '' -p '' --shares
+
+smbclient -L \\<IP>
+echo exit | smbclient -L \\\\<IP>   # exit will take care of any password popups
+smbclient \\\\<IP>\\<SHARE_NAME>    # attempt to connect to the share
+```
+```
 ####################################
 FOR SAMBA: (grab the version number)
 ####################################
