@@ -1,5 +1,21 @@
 # Common Ports Enum (Frequently seen)
 
+## Auto Enumeration Tool(s) (General)
+
+```
+nmapAutomator <IP> All
+
+autorecon <IP>/CIDR
+```
+
+## Banner Grabbing (General)
+
+```
+nc -nv <IP> <PORT>
+
+telnet <IP> <PORT>
+```
+
 ## FTP - Port 21
 
 ### Connect
