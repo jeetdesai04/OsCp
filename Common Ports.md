@@ -271,7 +271,23 @@ client min protocol = LANMAN1
 2nd console: echo exit | smbclient -L [Target IP]
 
 github script which does something similar (MAKE SURE TO CHANGE IPS AND TUN0): https://github.com/rewardone/OSCPRepo/blob/master/scripts/recon_enum/smbver.sh
+```
 
+### Brute Force
+
+```
+crackmapexec smb <IP> -u <USER_LIST> -p <PASSWORD_LIST>
+```
+
+### Mount SMB Share
+
+```
+mkdir /tmp/share
+sudo mount -t cifs //<IP>/<SHARE> /tmp/share
+sudo mount -t cifs -o 'username=<USER>,password=<PASSWORD>'//<IP>/<SHARE> /tmp/share
+
+smbclient //<IP>/<SHARE>
+smbclient //<IP>/<SHARE> -U <USER>
 ```
 
 ### MySQL - SQL injection
@@ -298,35 +314,6 @@ https://perspectiverisk.com/mssql-practical-injection-cheat-sheet/
 ```
 
 
-### POP
-
-```
-
-$ nc -nv <IP> 110    # banner grabbing
-
-$ telnet <IP> 110   # connect/banner grabbing
-
-USER <user>
-PASS <pass>
-
-
-```
-
-### Active directory
-
-```
-C:> net user
-C:> net user /domain     ----> will enumerate all users in domain
-C:> net user <user> /domain
-
-C:> net group /domain    ----> enumerate all groups in domain
-
-(use net.exe to lookup users and groups in domain)
-
-LDAP://HostName[:PortNumber][/DistinguishedName]  ----> LDAP provider path format
-
-PS C:> [System.DirectoryServices.ActiveDirectory.Domain]::GetCurrentDomain()   ----> retrives the domain object for current user logged in
 
 
 
-```
