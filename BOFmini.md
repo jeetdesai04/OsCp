@@ -1,4 +1,4 @@
-# BOF STOOF
+# BOF STUFF
 
 ```
 # Payload
